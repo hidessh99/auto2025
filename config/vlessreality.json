@@ -1,0 +1,148 @@
+{
+  "log": {
+  "access": "/var/log/xray/access.log",
+  "error": "/var/log/xray/error.log",
+  "loglevel": "debug"
+  },
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "block"
+      },
+      {
+        "inboundTag": [
+          "api"
+        ],
+        "outboundTag": "api",
+        "type": "field"
+      }
+    ]
+  },
+  "dns": null,
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10008,
+      "protocol": "dokodemo-door",
+      "settings": {
+        "address": "127.0.0.1"
+      },
+      "streamSettings": null,
+      "tag": "api",
+      "sniffing": null
+    },
+    {
+      "listen": "0.0.0.0",
+      "port": 61789,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "email": "vipssh",
+            "flow": "xtls-rprx-vision",
+            "id": "e8c34629-67de-465b-b4c9-c48e11dbe23b"
+#vless-reality
+          }
+        ],
+        "decryption": "none",
+        "fallbacks": []
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "tcpSettings": {
+          "acceptProxyProtocol": false,
+          "header": {
+            "type": "none"
+          }
+        },
+        "realitySettings": {
+          "show": false,
+          "xver": 0,
+          "fingerprint": "chrome",
+          "dest": "microsoft.com:443",
+          "serverNames": [
+          "tgju.org",
+          "yahoo.com",
+          "asus.com",
+          "cisco.com",
+          "amd.com",
+          "nvidia.com",
+          "microsoft.com",
+          "tsel.me",
+          "www.tgju.org",
+          "axis.net",
+          "google.com"
+          ],
+          "privateKey": "CIWOwU4ZOJaigxIOa3gwdVo8ofrDAZ-0IlT4cG3713g",
+          "publicKey": "XWDtPNhiNPJCCB8eXeBYrFrgQJSpL4-tGpkVoIuTs0U",
+          "minClient": "",
+          "maxClient": "",
+          "maxTimediff": 0,
+          "shortIds": [
+            "72a8755a"
+          ]
+        }
+      },
+      "sniffing": {
+        "enabled": false,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "transport": null,
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserUplink": true,
+        "statsUserDownlink": true
+      }
+    },
+    "system": {
+      "statsInboundDownlink": true,
+      "statsInboundUplink": true
+    }
+  },
+  "api": {
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService"
+    ],
+    "tag": "api"
+  },
+  "stats": {},
+  "reverse": null,
+  "fakeDns": null
+}

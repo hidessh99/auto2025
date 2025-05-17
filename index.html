@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Connected</title>
+    <link rel="shortcut icon" href="icon.svg" type="image/x-icon">
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        #clock {
+            font-size: 48px;
+            text-align: center;
+            color: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f1f1f1;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .server-icon {
+            font-size: 80px;
+            color: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        .server-text {
+            font-size: 36px;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="server-icon">&#128250;</span>
+        <h1 class="server-text">Server Connected</h1>
+        <div id="clock"></div>
+    </div>
+    <script>
+        function displayTime() {
+            var date = new Date();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+            var time = hours + ":" + minutes + ":" + seconds;
+
+            document.getElementById("clock").innerHTML = time;
+        }
+
+        setInterval(displayTime, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[Unit]
+Description=Clear Access Log Service
+After=network.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/clear-log
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target

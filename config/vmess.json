@@ -1,0 +1,132 @@
+{
+    "stats": {},
+      "api": {
+        "tag": "api",
+        "services": [
+          "StatsService"
+      ]
+    },
+    "policy": {
+      "levels": {
+        "0": {
+          "statsUserUplink": true,
+          "statsUserDownlink": true
+        }
+      },
+      "system": {
+        "statsInboundUplink": true,
+        "statsInboundDownlink": true,
+        "statsOutboundUplink": true,
+        "statsOutboundDownlink": true
+      }
+    },
+    "log": {
+      "access": "/var/log/xray/access.log",
+      "error": "/var/log/xray/error.log",
+      "loglevel": "debug"
+    },
+    "inbounds": [
+      {
+        "port": 55,
+        "listen":"0.0.0.0",
+        "protocol": "vmess",
+        "settings": {
+          "clients": [
+            {
+              "id": "e8c34629-67de-465b-b4c9-c48e11dbe23b",
+              "alterId": 0,
+              "email": "GitSSH"
+  #vmess
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "ws",
+          "wsSettings": {
+            #"acceptProxyProtocol": true,
+            "path": "/worryfree"
+          }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": ["http", "tls"]
+        }
+      },
+      {
+        "port": 1055,
+        "listen":"127.0.0.1",
+        "protocol": "vmess",
+        "settings": {
+          "clients": [
+            {
+              "id": "e8c34629-67de-465b-b4c9-c48e11dbe23b",
+              "alterId": 0,
+              "email": "GitSSH"
+  #vmess-grpc
+            }
+          ]
+        },
+        "streamSettings": {
+          "network": "grpc",
+          "grpcSettings": {
+              "serviceName": "vmess-grpc"
+          }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": ["http", "tls"]
+        }
+      },
+      {
+        "listen": "127.0.0.1",
+        "port": 10001,
+        "protocol": "dokodemo-door",
+          "settings": {
+            "address": "127.0.0.1"
+          },
+        "tag": "api"
+      }
+    ],
+   "outbounds": [
+      {
+        "protocol": "freedom",
+        "settings": {}
+      },
+      {
+        "protocol": "blackhole",
+        "settings": {},
+        "tag": "block"
+      }
+    ],
+    "routing": {
+      "rules": [
+        {
+          "type": "field",
+          "ip": [
+            "10.0.0.0/8",
+            "100.64.0.0/10",
+            "169.254.0.0/16",
+            "172.16.0.0/12",
+            "192.0.0.0/24",
+            "192.0.2.0/24",
+            "192.168.0.0/16",
+            "198.18.0.0/15",
+            "198.51.100.0/24",
+            "203.0.113.0/24",
+            "::1/128",
+            "fc00::/7",
+            "fe80::/10"
+          ],
+          "outboundTag": "block"
+        },
+        {
+          "inboundTag": [
+            "api"
+          ],
+          "outboundTag": "api",
+          "type": "field"
+        }
+      ]
+    }
+  }
+

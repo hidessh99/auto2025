@@ -1,0 +1,15 @@
+[Unit]
+Description=WebSocket ePro VipSSH
+After=syslog.target network-online.target
+
+[Service]
+User=root
+NoNewPrivileges=true
+ExecStart=/usr/sbin/ws -f /usr/sbin/tunws.conf
+Restart=on-failure
+RestartPreventExitStatus=23
+LimitNPROC=1000000
+LimitNOFILE=10000000
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,257 @@
+global
+  tune.ssl.default-dh-param 2048
+  tune.h2.initial-window-size 2147483647
+  maxconn 1000000
+
+defaults
+  option httplog
+  option redispatch
+  option forwardfor
+  option dontlognull
+  option http-server-close
+
+  timeout client-fin 1s
+  timeout server-fin 1s
+  timeout connect 15s
+  timeout client 15s
+  timeout server 24h
+  timeout tunnel 24h
+
+frontend my_listen
+  bind *:80 tfo
+  bind *:443 tfo
+  bind *:2202 tfo
+  bind *:8484 tfo
+  bind *:8080 tfo
+  bind *:8880 tfo
+  tcp-request inspect-delay 500ms
+  tcp-request content accept if { req.ssl_hello_type 1 }
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+
+  acl this_payload payload(0,7) -m bin 5353482d322e30
+  acl len_zero req.len 0
+  acl path_panel path_reg -i ^\/api\/(.*)
+  acl path_all path_reg -i ^\/(.*)
+  acl redir_ssl req_ssl_sni -m found
+
+  use_backend this_ssl if redir_ssl
+  use_backend payload_data if this_payload
+  use_backend panel if path_panel
+  use_backend read_reg if path_all
+  use_backend no_Length if len_zero
+
+frontend ssl
+  bind abns@haproxy-pipe-ssl tfo ssl crt /usr/sbin/vipssh/vipssh.pem alpn h2,http/1.1
+  tcp-request inspect-delay 500ms
+  tcp-request content accept if { req.ssl_hello_type 1 }
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+
+  acl this_payload payload(0,7) -m bin 5353482d322e30
+  acl len_zero req.len 0
+  acl path_panel path_reg -i ^\/api\/(.*)
+  acl path_all path_reg -i ^\/(.*)
+  acl redir_ssl req_ssl_sni -m found
+  acl conn_h2 ssl_fc_alpn -i h2
+
+  use_backend panel if path_panel conn_h2
+  use_backend h2connect if conn_h2
+  use_backend payload_data if this_payload
+  use_backend panel if path_panel
+  use_backend read_reg if path_all
+  use_backend no_Length if len_zero
+
+frontend proxy
+  bind abns@haproxy-pipe-proxy tfo accept-proxy
+  tcp-request inspect-delay 500ms
+  tcp-request content accept if { req.ssl_hello_type 1 }
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+
+  acl path_vmess path_reg -i ^\/vm(.*)
+  acl path_vless path_reg -i ^\/vl(.*)
+  acl path_trojan path_reg -i ^\/tr(.*)
+  acl path_socks path_reg -i ^\/soc(.*)
+  acl path_shadowsocks path_reg -i ^\/sha(.*)
+  acl path_shadowsocks2022 path_reg -i ^\/ssws2022(.*)
+  acl path_ssh path_reg -i ^\/ssh(.*)
+  acl path_ssh1 path -i /
+  acl path_sshtra path_reg -i ^\/(.*)\/tra(.*)
+  acl path_ssh2 path_reg -i ^\/(.*)\/ssh(.*)
+  acl path_ovpn path_reg -i ^\/ovpn(.*)
+  acl path_ovpn2 path_reg -i ^\/(.*)\/ovpn(.*)
+  acl path_vless2 path_reg -i ^\/(.*)\/vl(.*)
+  acl path_trojan2 path_reg -i ^\/(.*)\/tro(.*)
+  acl path_socks2 path_reg -i ^\/(.*)\/soc(.*)
+  acl path_shadowsocks2 path_reg -i ^\/(.*)\/sha(.*)
+  acl path_shadowsocks2022_2 path_reg -i ^\/(.*)\/ssws2022(.*)
+  acl path_vmess2 path_reg -i ^\/(.*)
+
+  use_backend vmess if path_vmess
+  use_backend vless if path_vless
+  use_backend trojan if path_trojan
+  use_backend socks if path_socks
+  use_backend shadowsocks if path_shadowsocks
+  use_backend shadowsocks2022 if path_shadowsocks2022
+  use_backend to_ng if path_ssh
+  use_backend to_ng if path_ssh1
+  use_backend to_ng if path_sshtra
+  use_backend to_ng if path_ssh2
+  use_backend vless if path_vless2
+  use_backend trojan if path_trojan2
+  use_backend socks if path_socks2
+  use_backend shadowsocks if path_shadowsocks2
+  use_backend shadowsocks2022 if path_shadowsocks2022_2
+  use_backend vmess if path_vmess2
+
+frontend from_ng
+  bind 127.0.0.1:1229 tfo
+  tcp-request inspect-delay 500ms
+  tcp-request content accept if { req.ssl_hello_type 1 }
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+
+  acl this_payload payload(0,7) -m bin 5353482d322e30
+  acl len_zero req.len 0
+
+  use_backend payload_data2 if this_payload
+  use_backend no_Length if len_zero
+
+frontend just_sv
+  bind *:7788 tfo
+  bind *:2082 tfo
+  bind *:8443 tfo ssl crt /usr/sbin/vipssh/vipssh.pem alpn h2,http/1.1
+  tcp-request inspect-delay 500ms
+  tcp-request content accept if { req.ssl_hello_type 1 }
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+
+  acl this_payload payload(0,7) -m bin 5353482d322e30
+  acl len_zero req.len 0
+  acl path_sv path_reg -i ^\/(.*)
+
+  use_backend payload_data if this_payload
+  use_backend no_Length if len_zero
+  use_backend to_ng if path_sv
+
+backend read_reg
+  server localhost abns@haproxy-pipe-proxy send-proxy check
+
+backend this_ssl
+  server localhost abns@haproxy-pipe-ssl
+
+backend vmess
+  mode http
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  http-request replace-path /(.*) /worryfree
+  server localhost 127.0.0.1:55
+
+backend vless
+  mode http
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  http-request replace-path /(.*) /worryfree
+  server localhost 127.0.0.1:56
+
+backend trojan
+  mode http
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  http-request replace-path /(.*) /trojan
+  server localhost 127.0.0.1:57
+
+backend socks
+  mode http
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  http-request replace-path /(.*) /socks5
+  server localhost 127.0.0.1:58
+
+backend shadowsocks
+  mode http
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  http-request replace-path /(.*) /shadowsocks
+  server localhost 127.0.0.1:59
+
+backend shadowsocks2022
+  mode http
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  http-request replace-path /(.*) /ssws2022
+  server localhost 127.0.0.1:60
+
+
+backend to_ng
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  server localhost 127.0.0.1:2996
+
+backend h2connect
+  mode http
+  option forwardfor header X-Real-IP
+  acl from_cf src -f /usr/sbin/vipssh/vipssh.lst
+  acl cf_ip_hdr req.hdr(CF-Connecting-IP) -m found
+  http-request set-header X-Forwarded-For %[req.hdr(CF-Connecting-IP)] if from_cf cf_ip_hdr
+  http-request set-header X-Forwarded-For %[src] if !from_cf !cf_ip_hdr
+  server localhost 127.0.0.1:9605 proto h2 send-proxy
+
+backend no_Length
+  mode tcp
+  server localhost 127.0.0.1:1194
+
+backend payload_data
+  mode tcp
+  balance roundrobin
+  server localhost-bitbucket-ssh 127.0.0.1:2222
+  server localhost               127.0.0.1:90
+
+backend payload_data2
+  mode tcp
+  server localhost               127.0.0.1:69
+
+backend panel
+  mode http
+  option forwardfor header X-Forwarded-For
+  http-request set-header X-Forwarded-For %[src]
+  server localhost /usr/sbin/vipssh/app2.sock
+
+
