@@ -1274,9 +1274,7 @@ echo -e "[ ${tyblue}NOTES${NC} ] Then run this script again"
 echo -e "[ ${tyblue}NOTES${NC} ] Notes, Script By : ZenSSH"
 echo ""
 
-echo -e "[ ${tyblue}NOTES${NC} ] I need check your license first.."
-sleep 2
-license
+
 echo -e "[ ${tyblue}NOTES${NC} ] if you understand and start installing tap enter now.."
 read
 sleep 1
