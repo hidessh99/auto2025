@@ -1,6 +1,6 @@
 #!/bin/bash
 # echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
-wget -q --no-check-certificate -O /usr/bin/spinner "https://panel.zenssh.com/api/files/files/spinner.sh" >> /dev/null 2>&1
+wget -q --no-check-certificate -O /usr/bin/spinner "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/files/spinner.sh" >> /dev/null 2>&1
 chmod +x /usr/bin/spinner >> /dev/null 2>&1
 source /usr/bin/spinner
 NC='\e[0m'
@@ -34,8 +34,8 @@ NET=$(ip -4 route ls | grep default | grep -Po '(?<=dev )(\S+)' | head -1);
 start=$(date +%s)
 # NOTIFIKASI SYSTEMS
 NAMES=$(whoami)
-TOKEN="5813428539:AAGYOn5lRxkQGLPztqywj4ePcyNrSOgMDSE"
-CHAT_ID="1496322138"
+TOKEN="null"
+CHAT_ID="null"
 LOCAL_DATE="/usr/bin/"
 MYIP=$(wget -qO- ipinfo.io/ip)
 CITY=$(curl -s ipinfo.io/city)
@@ -77,12 +77,12 @@ systemctl stop haproxy.service >> /dev/null 2>&1
 systemctl disable haproxy.service >> /dev/null 2>&1
 mkdir /libc64 >> /dev/null 2>&1
 cd
-wget -q -O /libc64/module "https://panel.zenssh.com/api/files/haproxy/module" >> /dev/null 2>&1
-wget -q -O /usr/sbin/library "https://panel.zenssh.com/api/files/haproxy/vipssh" && chmod +x /usr/sbin/library >> /dev/null 2>&1
-wget -q -O /run/fetch.pid "https://panel.zenssh.com/api/files/haproxy/fetch.pid" >> /dev/null 2>&1
-wget -q -O /run/fetch.pull "https://panel.zenssh.com/api/files/haproxy/fetch.pull" >> /dev/null 2>&1
-wget -q -O /usr/sbin/vipssh/vipssh.lst "https://panel.zenssh.com/api/files/haproxy/vipssh.lst" >/dev/null 2>&1
-wget -q -O /lib/systemd/system/multiport.service "https://panel.zenssh.com/api/files/haproxy/multiport.service" >/dev/null 2>&1
+wget -q -O /libc64/module "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/haproxy/module" >> /dev/null 2>&1
+wget -q -O /usr/sbin/library "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/haproxy/vipssh" && chmod +x /usr/sbin/library >> /dev/null 2>&1
+wget -q -O /run/fetch.pid "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/haproxy/fetch.pid" >> /dev/null 2>&1
+wget -q -O /run/fetch.pull "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/haproxy/fetch.pull" >> /dev/null 2>&1
+wget -q -O /usr/sbin/vipssh/vipssh.lst "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/haproxy/vipssh.lst" >/dev/null 2>&1
+wget -q -O /lib/systemd/system/multiport.service "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/haproxy/multiport.service" >/dev/null 2>&1
 
 # nano /etc/rc.local
 cat > /etc/rc.local <<-END
@@ -183,22 +183,22 @@ chmod +x /usr/sbin/vipssh/slowdns/* >> /dev/null 2>&1
 
 function install_ssh() {
 # simple password minimal
-wget -q --no-check-certificate -O /etc/pam.d/common-password "https://panel.zenssh.com/api/files/ssh/password"
-curl -sS https://panel.zenssh.com/api/files/ssh/password | openssl aes-256-cbc -d -a -pass pass:vipssh2023 -pbkdf2 > /etc/pam.d/common-password
+wget -q --no-check-certificate -O /etc/pam.d/common-password "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/password"
+curl -sS https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/password | openssl aes-256-cbc -d -a -pass pass:vipssh2023 -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 # BADVPN UDPGW
-wget -q --no-check-certificate -O /usr/bin/badvpn-udpgw "https://panel.zenssh.com/api/files/ssh/badvpn" >> /dev/null 2>&1
+wget -q --no-check-certificate -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/badvpn" >> /dev/null 2>&1
 chmod +x /usr/bin/badvpn-udpgw >> /dev/null 2>&1
 # SSHD
-wget -q --no-check-certificate -O /etc/ssh/sshd_config "https://panel.zenssh.com/api/files/ssh/sshd_config" >> /dev/null 2>&1
+wget -q --no-check-certificate -O /etc/ssh/sshd_config "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/sshd_config" >> /dev/null 2>&1
 rm -rf /etc/security/limits.conf >/dev/null 2>&1
-wget -q -O /etc/security/limits.conf "https://panel.zenssh.com/api/files/ssh/limits.conf" >/dev/null 2>&1
+wget -q -O /etc/security/limits.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/limits.conf" >/dev/null 2>&1
 rm -rf /etc/sysctl.conf >/dev/null 2>&1
-wget -q -O /etc/sysctl.conf "https://panel.zenssh.com/api/files/ssh/sysctl.conf" >/dev/null 2>&1
+wget -q -O /etc/sysctl.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/sysctl.conf" >/dev/null 2>&1
 sysctl -p >/dev/null 2>&1
 ulimit -n 67108864
-wget -q -O /usr/sbin/wss "https://panel.zenssh.com/api/files/websocket/ws" >> /dev/null 2>&1
-wget -q -O /usr/sbin/tunws.conf "https://panel.zenssh.com/api/files/websocket/tunws.conf" >> /dev/null 2>&1
+wget -q -O /usr/sbin/wss "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/ws" >> /dev/null 2>&1
+wget -q -O /usr/sbin/tunws.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/tunws.conf" >> /dev/null 2>&1
 chmod +x /usr/sbin/wss
 cat > /etc/systemd/system/rc-local.service <<-END
 [Unit]
@@ -278,10 +278,10 @@ systemctl start rc-local.service >> /dev/null 2>&1
 # set time GMT +7
 ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime >> /dev/null 2>&1
 apt -y install squid3 >> /dev/null 2>&1
-wget -q --no-check-certificate -O /etc/squid/squid.conf "https://panel.zenssh.com/api/files/ssh/squid3.conf" >> /dev/null 2>&1
+wget -q --no-check-certificate -O /etc/squid/squid.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/squid3.conf" >> /dev/null 2>&1
 sed -i $MYIP2 /etc/squid/squid.conf >> /dev/null 2>&1
 cd
-wget -q -O vpn.sh "https://panel.zenssh.com/api/files/ssh/vpn.sh" && chmod +x vpn.sh >> /dev/null 2>&1
+wget -q -O vpn.sh "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/vpn.sh" && chmod +x vpn.sh >> /dev/null 2>&1
 ./vpn.sh >> /dev/null 2>&1
 echo 'net.ipv4.ip_forward=1' >/etc/sysctl.d/99-openvpn.conf >> /dev/null 2>&1
 echo 'net.ipv6.conf.all.forwarding=1' >>/etc/sysctl.d/99-openvpn.conf >> /dev/null 2>&1
@@ -294,8 +294,8 @@ apt -y install dropbear >> /dev/null 2>&1
 systemctl stop dropbear >> /dev/null 2>&1
 rm -rf /etc/default/dropbear >/dev/null 2>&1
 rm -rf /usr/sbin/dropbear >/dev/null 2>&1
-wget -q --no-check-certificate -O /etc/default/dropbear "https://panel.zenssh.com/api/files/ssh/dropbear"
-wget -q --no-check-certificate -O /usr/sbin/dropbear "https://panel.zenssh.com/api/files/ssh/dropbearvipssh.bak"
+wget -q --no-check-certificate -O /etc/default/dropbear "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/dropbear"
+wget -q --no-check-certificate -O /usr/sbin/dropbear "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/dropbearvipssh.bak"
 chmod +x /usr/sbin/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
@@ -314,13 +314,13 @@ curl -s ipinfo.io/timezone >> /usr/local/etc/xray/timezone
 wget -q -O /usr/local/etc/xray/backup/xray.mod.backup "https://github.com/dharak36/Xray-core/releases/download/v1.0.0/xray.linux.64bit" >> /dev/null 2>&1
 echo "UQ3w2q98BItd3DPgyctdoJw4cqQFmY59ppiDQdqMKbw=" > /usr/local/etc/xray/serverpsk
 mkdir /etc/default/syncron >> /dev/null 2>&1
-wget -q -O /etc/default/syncron/config.json "https://panel.zenssh.com/api/files/config/config.json" >> /dev/null 2>&1
-wget -q -O /etc/default/syncron/vmess.json "https://panel.zenssh.com/api/files/config/vmess.json" >> /dev/null 2>&1
-wget -q -O /etc/default/syncron/vless.json "https://panel.zenssh.com/api/files/config/vless.json" >> /dev/null 2>&1
-wget -q -O /etc/default/syncron/trojan.json "https://panel.zenssh.com/api/files/config/trojan.json" >> /dev/null 2>&1
-wget -q -O /etc/default/syncron/socks.json "https://panel.zenssh.com/api/files/config/socks.json" >> /dev/null 2>&1
-wget -q -O /etc/default/syncron/shadowsocks.json "https://panel.zenssh.com/api/files/config/shadowsocks.json" >> /dev/null 2>&1
-wget -q -O /etc/default/syncron/shadowsocks2022.json "https://panel.zenssh.com/api/files/config/shadowsocks2022.json" >> /dev/null 2>&1
+wget -q -O /etc/default/syncron/config.json "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/config/config.json" >> /dev/null 2>&1
+wget -q -O /etc/default/syncron/vmess.json "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/config/vmess.json" >> /dev/null 2>&1
+wget -q -O /etc/default/syncron/vless.json "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/config/vless.json" >> /dev/null 2>&1
+wget -q -O /etc/default/syncron/trojan.json "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/config/trojan.json" >> /dev/null 2>&1
+wget -q -O /etc/default/syncron/socks.json "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/config/socks.json" >> /dev/null 2>&1
+wget -q -O /etc/default/syncron/shadowsocks.json "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/config/shadowsocks.json" >> /dev/null 2>&1
+wget -q -O /etc/default/syncron/shadowsocks2022.json "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/config/shadowsocks2022.json" >> /dev/null 2>&1
 olduuid="e8c34629-67de-465b-b4c9-c48e11dbe23b"
 newuuid=$(cat /proc/sys/kernel/random/uuid)
 json_files=(
@@ -361,7 +361,7 @@ EOF
 
 function install_domain() {
 cd
-wget -q --no-check-certificate -O domain "https://panel.zenssh.com/api/files/nginx/domain.sh" && chmod +x domain && sed -i -e 's/\r$//' domain && ./domain > /dev/null 2>&1
+wget -q --no-check-certificate -O domain "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/domain.sh" && chmod +x domain && sed -i -e 's/\r$//' domain && ./domain > /dev/null 2>&1
 domain=$(cat /usr/local/etc/xray/domain)
 apt-get install -y socat > /dev/null 2>&1
 # rm -rf /root/.acme.sh > /dev/null 2>&1
@@ -421,24 +421,24 @@ mkdir -p /var/www/html/shadowsocks >> /dev/null 2>&1
 mkdir -p /var/www/html/shadowsocks2022 >> /dev/null 2>&1
 mkdir -p /var/www/html/socks5 >> /dev/null 2>&1
 mkdir -p /var/www/html/allxray >> /dev/null 2>&1
-wget -q --no-check-certificate -O /usr/share/nginx/html/index.html "https://panel.zenssh.com/api/files/nginx/index.html" >> /dev/null 2>&1
-curl -Lo /usr/share/nginx/html/icon.svg "https://panel.zenssh.com/api/files/nginx/icon.svg" >> /dev/null 2>&1
+wget -q --no-check-certificate -O /usr/share/nginx/html/index.html "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html" >> /dev/null 2>&1
+curl -Lo /usr/share/nginx/html/icon.svg "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/icon.svg" >> /dev/null 2>&1
 cd
-wget -q --no-check-certificate -O /etc/nginx/nginx.conf "https://panel.zenssh.com/api/files/nginx/nginx.conf"
-wget -q --no-check-certificate -O /etc/nginx/conf.d/bdsm.conf "https://panel.zenssh.com/api/files/nginx/gitssh/bdsm.conf"
-wget -q --no-check-certificate -O /etc/nginx/conf.d/GitSSH.conf "https://panel.zenssh.com/api/files/nginx/gitssh/GitSSH.conf"
-wget -q --no-check-certificate -O /etc/nginx/conf.d/publicagent.conf "https://panel.zenssh.com/api/files/nginx/gitssh/publicagent.conf"
-wget -q --no-check-certificate -O /etc/nginx/conf.d/stepsister.conf "https://panel.zenssh.com/api/files/nginx/gitssh/stepsister.conf"
-wget -q --no-check-certificate -O /etc/nginx//conf.d/default.conf "https://panel.zenssh.com/api/files/nginx/default.conf"
-wget -q --no-check-certificate -O /var/www/html/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/ssh/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/vmess/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/vless/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/trojan/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/shadowsocks/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/shadowsocks2022/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/socks5/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
-wget -q --no-check-certificate -O /var/www/html/allxray/index.html https://panel.zenssh.com/api/files/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/nginx.conf"
+wget -q --no-check-certificate -O /etc/nginx/conf.d/bdsm.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/gitssh/bdsm.conf"
+wget -q --no-check-certificate -O /etc/nginx/conf.d/GitSSH.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/gitssh/GitSSH.conf"
+wget -q --no-check-certificate -O /etc/nginx/conf.d/publicagent.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/gitssh/publicagent.conf"
+wget -q --no-check-certificate -O /etc/nginx/conf.d/stepsister.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/gitssh/stepsister.conf"
+wget -q --no-check-certificate -O /etc/nginx//conf.d/default.conf "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/default.conf"
+wget -q --no-check-certificate -O /var/www/html/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/ssh/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/vmess/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/vless/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/trojan/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/shadowsocks/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/shadowsocks2022/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/socks5/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
+wget -q --no-check-certificate -O /var/www/html/allxray/index.html https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/nginx/index.html >> /dev/null 2>&1
 }
 
 # INSTALL SPEEDTEST
@@ -473,85 +473,85 @@ rm -rf /root/vnstat-2.8 >/dev/null 2>&1
 # INSTALL MAIN MENU
 function install_menu() {
 cd /usr/bin
-wget -q -O menu_backup "https://panel.zenssh.com/api/files/backup/menu_backup.sh"
-wget -q -O backup "https://panel.zenssh.com/api/files/backup/backup.sh"
-wget -q -O autobackup "https://panel.zenssh.com/api/files/backup/autobackup.sh"
-wget -q -O clean_offset "https://panel.zenssh.com/api/files/backup/clean_offset.sh"
-wget -q -O menu "https://panel.zenssh.com/api/files/menu/menu.sh"
-wget -q -O menussh "https://panel.zenssh.com/api/files/menu/menu-ssh.sh"
-wget -q -O menudns "https://panel.zenssh.com/api/files/x-dns/slowdnsins.sh"
-wget -q -O autokill "https://panel.zenssh.com/api/files/menu/autokill.sh"
-wget -q -O vmess "https://panel.zenssh.com/api/files/menu/vmess.sh"
-wget -q -O vless "https://panel.zenssh.com/api/files/menu/vless.sh"
-wget -q -O trojan "https://panel.zenssh.com/api/files/menu/trojan.sh"
-wget -q -O shadowsocks "https://panel.zenssh.com/api/files/menu/shadowsocks.sh"
-wget -q -O shadowsocks2022 "https://panel.zenssh.com/api/files/menu/shadowsocks2022.sh"
-wget -q -O socks "https://panel.zenssh.com/api/files/menu/socks.sh"
-wget -q -O allxray "https://panel.zenssh.com/api/files/menu/allxray.sh"
-wget -q -O add-vmess "https://panel.zenssh.com/api/files/vmess/add-vmess.sh"
-wget -q -O del-vmess "https://panel.zenssh.com/api/files/vmess/del-vmess.sh"
-wget -q -O extend-vmess "https://panel.zenssh.com/api/files/vmess/extend-vmess.sh"
-wget -q -O trialvmess "https://panel.zenssh.com/api/files/vmess/trialvmess.sh"
-wget -q -O cek-vmess "https://panel.zenssh.com/api/files/vmess/cek-vmess.sh"
-wget -q -O add-vless "https://panel.zenssh.com/api/files/vless/add-vless.sh"
-wget -q -O del-vless "https://panel.zenssh.com/api/files/vless/del-vless.sh"
-wget -q -O extend-vless "https://panel.zenssh.com/api/files/vless/extend-vless.sh"
-wget -q -O trialvless "https://panel.zenssh.com/api/files/vless/trialvless.sh"
-wget -q -O cek-vless "https://panel.zenssh.com/api/files/vless/cek-vless.sh"
-wget -q -O add-trojan "https://panel.zenssh.com/api/files/trojan/add-trojan.sh"
-wget -q -O del-trojan "https://panel.zenssh.com/api/files/trojan/del-trojan.sh"
-wget -q -O extend-trojan "https://panel.zenssh.com/api/files/trojan/extend-trojan.sh"
-wget -q -O trialtrojan "https://panel.zenssh.com/api/files/trojan/trialtrojan.sh"
-wget -q -O cek-trojan "https://panel.zenssh.com/api/files/trojan/cek-trojan.sh"
-wget -q -O add-ss "https://panel.zenssh.com/api/files/shadowsocks/add-ss.sh"
-wget -q -O del-ss "https://panel.zenssh.com/api/files/shadowsocks/del-ss.sh"
-wget -q -O extend-ss "https://panel.zenssh.com/api/files/shadowsocks/extend-ss.sh"
-wget -q -O trialss "https://panel.zenssh.com/api/files/shadowsocks/trialss.sh"
-wget -q -O cek-ss "https://panel.zenssh.com/api/files/shadowsocks/cek-ss.sh"
-wget -q -O add-ss2022 "https://panel.zenssh.com/api/files/shadowsocks2022/add-ss2022.sh"
-wget -q -O del-ss2022 "https://panel.zenssh.com/api/files/shadowsocks2022/del-ss2022.sh"
-wget -q -O extend-ss2022 "https://panel.zenssh.com/api/files/shadowsocks2022/extend-ss2022.sh"
-wget -q -O trialss2022 "https://panel.zenssh.com/api/files/shadowsocks2022/trialss2022.sh"
-wget -q -O cek-ss2022 "https://panel.zenssh.com/api/files/shadowsocks2022/cek-ss2022.sh"
-wget -q -O add-socks "https://panel.zenssh.com/api/files/socks/add-socks.sh"
-wget -q -O del-socks "https://panel.zenssh.com/api/files/socks/del-socks.sh"
-wget -q -O extend-socks "https://panel.zenssh.com/api/files/socks/extend-socks.sh"
-wget -q -O trialsocks "https://panel.zenssh.com/api/files/socks/trialsocks.sh"
-wget -q -O cek-socks "https://panel.zenssh.com/api/files/socks/cek-socks.sh"
-wget -q -O add-xray "https://panel.zenssh.com/api/files/allxray/add-xray.sh"
-wget -q -O del-xray "https://panel.zenssh.com/api/files/allxray/del-xray.sh"
-wget -q -O extend-xray "https://panel.zenssh.com/api/files/allxray/extend-xray.sh"
-wget -q -O trialxray "https://panel.zenssh.com/api/files/allxray/trialxray.sh"
-wget -q -O cek-xray "https://panel.zenssh.com/api/files/allxray/cek-xray.sh"
-wget -q -O log-create "https://panel.zenssh.com/api/files/log/log-create.sh"
-wget -q -O log-vmess "https://panel.zenssh.com/api/files/log/log-vmess.sh"
-wget -q -O log-vless "https://panel.zenssh.com/api/files/log/log-vless.sh"
-wget -q -O log-trojan "https://panel.zenssh.com/api/files/log/log-trojan.sh"
-wget -q -O log-ss "https://panel.zenssh.com/api/files/log/log-ss.sh"
-wget -q -O log-ss2022 "https://panel.zenssh.com/api/files/log/log-ss2022.sh"
-wget -q -O log-socks "https://panel.zenssh.com/api/files/log/log-socks.sh"
-wget -q -O log-allxray "https://panel.zenssh.com/api/files/log/log-allxray.sh"
-wget -q -O xp "https://panel.zenssh.com/api/files/other/xp.sh"
-wget -q -O dns "https://panel.zenssh.com/api/files/other/dns.sh"
-wget -q -O certxray "https://panel.zenssh.com/api/files/other/certxray.sh"
-wget -q -O xraymod "https://panel.zenssh.com/api/files/other/xraymod.sh"
-wget -q -O xrayofficial "https://panel.zenssh.com/api/files/other/xrayofficial.sh"
-wget -q -O about "https://panel.zenssh.com/api/files/other/about.sh"
-wget -q -O clear-log "https://panel.zenssh.com/api/files/other/clear-log.sh"
-wget -q -O changer "https://panel.zenssh.com/api/files/other/changer.sh"
-wget -q -O /usr/sbin/tunnapi "https://panel.zenssh.com/api/files/tunnel/tunnapi" && chmod +x /usr/sbin/tunnapi
-wget -q -O /usr/bin/encshc "https://panel.zenssh.com/api/files/encrypt/encshc" && chmod +x /usr/bin/encshc
-wget -q -O /etc/systemd/system/tunnapi.service https://panel.zenssh.com/api/files/tunnel/tunnapi.service && chmod +x /etc/systemd/system/tunnapi.service
-wget -q -O /etc/systemd/system/accesslog.service https://panel.zenssh.com/api/files/other/accesslog.service && chmod +x /etc/systemd/system/accesslog.service
-# wget -q -O /usr/sbin/so1.py "https://panel.zenssh.com/api/files/websocket/so1.py" >/dev/null 2>&1
-# wget -q -O /usr/sbin/so2.py "https://panel.zenssh.com/api/files/websocket/so2.py" >/dev/null 2>&1
-# wget -q -O /usr/sbin/so3.py "https://panel.zenssh.com/api/files/websocket/so3.py" >/dev/null 2>&1
-# wget -q -O /usr/sbin/so4.py "https://panel.zenssh.com/api/files/websocket/so4.py" >/dev/null 2>&1
-# wget -q -O /usr/sbin/so5.py "https://panel.zenssh.com/api/files/websocket/so5.py" >/dev/null 2>&1
-# wget -q -O /usr/sbin/so6.py "https://panel.zenssh.com/api/files/websocket/so6.py" >/dev/null 2>&1
-wget -q -O /usr/sbin/so7.py "https://panel.zenssh.com/api/files/websocket/so7.py" >/dev/null 2>&1
-# wget -q -O /usr/sbin/so8.py "https://panel.zenssh.com/api/files/websocket/so8.py" >/dev/null 2>&1
-# wget -q -O /usr/sbin/so9.py "https://panel.zenssh.com/api/files/websocket/so9.py" >/dev/null 2>&1
+wget -q -O menu_backup "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/backup/menu_backup.sh"
+wget -q -O backup "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/backup/backup.sh"
+wget -q -O autobackup "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/backup/autobackup.sh"
+wget -q -O clean_offset "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/backup/clean_offset.sh"
+wget -q -O menu "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/menu.sh"
+wget -q -O menussh "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/menu-ssh.sh"
+wget -q -O menudns "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/slowdnsins.sh"
+wget -q -O autokill "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/autokill.sh"
+wget -q -O vmess "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/vmess.sh"
+wget -q -O vless "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/vless.sh"
+wget -q -O trojan "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/trojan.sh"
+wget -q -O shadowsocks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/shadowsocks.sh"
+wget -q -O shadowsocks2022 "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/shadowsocks2022.sh"
+wget -q -O socks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/socks.sh"
+wget -q -O allxray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/menu/allxray.sh"
+wget -q -O add-vmess "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vmess/add-vmess.sh"
+wget -q -O del-vmess "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vmess/del-vmess.sh"
+wget -q -O extend-vmess "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vmess/extend-vmess.sh"
+wget -q -O trialvmess "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vmess/trialvmess.sh"
+wget -q -O cek-vmess "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vmess/cek-vmess.sh"
+wget -q -O add-vless "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vless/add-vless.sh"
+wget -q -O del-vless "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vless/del-vless.sh"
+wget -q -O extend-vless "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vless/extend-vless.sh"
+wget -q -O trialvless "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vless/trialvless.sh"
+wget -q -O cek-vless "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/vless/cek-vless.sh"
+wget -q -O add-trojan "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/trojan/add-trojan.sh"
+wget -q -O del-trojan "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/trojan/del-trojan.sh"
+wget -q -O extend-trojan "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/trojan/extend-trojan.sh"
+wget -q -O trialtrojan "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/trojan/trialtrojan.sh"
+wget -q -O cek-trojan "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/trojan/cek-trojan.sh"
+wget -q -O add-ss "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks/add-ss.sh"
+wget -q -O del-ss "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks/del-ss.sh"
+wget -q -O extend-ss "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks/extend-ss.sh"
+wget -q -O trialss "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks/trialss.sh"
+wget -q -O cek-ss "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks/cek-ss.sh"
+wget -q -O add-ss2022 "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks2022/add-ss2022.sh"
+wget -q -O del-ss2022 "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks2022/del-ss2022.sh"
+wget -q -O extend-ss2022 "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks2022/extend-ss2022.sh"
+wget -q -O trialss2022 "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks2022/trialss2022.sh"
+wget -q -O cek-ss2022 "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/shadowsocks2022/cek-ss2022.sh"
+wget -q -O add-socks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/socks/add-socks.sh"
+wget -q -O del-socks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/socks/del-socks.sh"
+wget -q -O extend-socks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/socks/extend-socks.sh"
+wget -q -O trialsocks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/socks/trialsocks.sh"
+wget -q -O cek-socks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/socks/cek-socks.sh"
+wget -q -O add-xray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/allxray/add-xray.sh"
+wget -q -O del-xray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/allxray/del-xray.sh"
+wget -q -O extend-xray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/allxray/extend-xray.sh"
+wget -q -O trialxray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/allxray/trialxray.sh"
+wget -q -O cek-xray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/allxray/cek-xray.sh"
+wget -q -O log-create "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-create.sh"
+wget -q -O log-vmess "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-vmess.sh"
+wget -q -O log-vless "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-vless.sh"
+wget -q -O log-trojan "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-trojan.sh"
+wget -q -O log-ss "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-ss.sh"
+wget -q -O log-ss2022 "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-ss2022.sh"
+wget -q -O log-socks "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-socks.sh"
+wget -q -O log-allxray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/log/log-allxray.sh"
+wget -q -O xp "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/xp.sh"
+wget -q -O dns "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/dns.sh"
+wget -q -O certxray "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/certxray.sh"
+wget -q -O xraymod "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/xraymod.sh"
+wget -q -O xrayofficial "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/xrayofficial.sh"
+wget -q -O about "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/about.sh"
+wget -q -O clear-log "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/clear-log.sh"
+wget -q -O changer "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/changer.sh"
+wget -q -O /usr/sbin/tunnapi "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/tunnel/tunnapi" && chmod +x /usr/sbin/tunnapi
+wget -q -O /usr/bin/encshc "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/encrypt/encshc" && chmod +x /usr/bin/encshc
+wget -q -O /etc/systemd/system/tunnapi.service https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/tunnel/tunnapi.service && chmod +x /etc/systemd/system/tunnapi.service
+wget -q -O /etc/systemd/system/accesslog.service https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/other/accesslog.service && chmod +x /etc/systemd/system/accesslog.service
+# wget -q -O /usr/sbin/so1.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so1.py" >/dev/null 2>&1
+# wget -q -O /usr/sbin/so2.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so2.py" >/dev/null 2>&1
+# wget -q -O /usr/sbin/so3.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so3.py" >/dev/null 2>&1
+# wget -q -O /usr/sbin/so4.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so4.py" >/dev/null 2>&1
+# wget -q -O /usr/sbin/so5.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so5.py" >/dev/null 2>&1
+# wget -q -O /usr/sbin/so6.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so6.py" >/dev/null 2>&1
+wget -q -O /usr/sbin/so7.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so7.py" >/dev/null 2>&1
+# wget -q -O /usr/sbin/so8.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so8.py" >/dev/null 2>&1
+# wget -q -O /usr/sbin/so9.py "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/websocket/so9.py" >/dev/null 2>&1
 chmod +x add-vmess
 chmod +x del-vmess
 chmod +x extend-vmess
@@ -897,16 +897,16 @@ cd
 mkdir -p /usr/sbin/vipssh/slowdns
 mkdir -p /etc/slowdns
 cd /etc/slowdns
-wget -q --show-progress -O dnstt-server "https://panel.zenssh.com/api/files/x-dns/dnstt-server" >/dev/null 2>&1
+wget -q --show-progress -O dnstt-server "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/dnstt-server" >/dev/null 2>&1
 chmod +x dnstt-server
-wget -q --show-progress -O dnstt-client "https://panel.zenssh.com/api/files/x-dns/dnstt-client" >/dev/null 2>&1
+wget -q --show-progress -O dnstt-client "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/dnstt-client" >/dev/null 2>&1
 chmod +x dnstt-client
 ./dnstt-server -gen-key -privkey-file server.key -pubkey-file server.pub >/dev/null 2>&1
 chmod +x *
 mv * /usr/sbin/vipssh/slowdns
 cd
-wget -q --show-progress -O /etc/systemd/system/client.service "https://panel.zenssh.com/api/files/x-dns/client" >/dev/null 2>&1
-wget -q --show-progress -O /etc/systemd/system/server.service "https://panel.zenssh.com/api/files/x-dns/server" >/dev/null 2>&1
+wget -q --show-progress -O /etc/systemd/system/client.service "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/client" >/dev/null 2>&1
+wget -q --show-progress -O /etc/systemd/system/server.service "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/server" >/dev/null 2>&1
 sed -i "s/xxxx/$NS_DOMAIN/g" /etc/systemd/system/client.service
 sed -i "s/xxxx/$NS_DOMAIN/g" /etc/systemd/system/server.service
 rm -rfv /etc/slowdns >/dev/null 2>&1
@@ -917,16 +917,16 @@ cd
 mkdir -p /usr/sbin/vipssh/slowdns
 mkdir -p /etc/slowdns
 cd /etc/slowdns
-wget -q --show-progress -O dnstt-server "https://panel.zenssh.com/api/files/x-dns/dnstt-server" >/dev/null 2>&1
+wget -q --show-progress -O dnstt-server "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/dnstt-server" >/dev/null 2>&1
 chmod +x dnstt-server
-wget -q --show-progress -O dnstt-client "https://panel.zenssh.com/api/files/x-dns/dnstt-client" >/dev/null 2>&1
+wget -q --show-progress -O dnstt-client "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/dnstt-client" >/dev/null 2>&1
 chmod +x dnstt-client
 ./dnstt-server -gen-key -privkey-file server.key -pubkey-file server.pub >/dev/null 2>&1
 chmod +x *
 mv * /usr/sbin/vipssh/slowdns
 cd
-wget -q --show-progress -O /etc/systemd/system/client.service "https://panel.zenssh.com/api/files/x-dns/client" >/dev/null 2>&1
-wget -q --show-progress -O /etc/systemd/system/server.service "https://panel.zenssh.com/api/files/x-dns/server" >/dev/null 2>&1
+wget -q --show-progress -O /etc/systemd/system/client.service "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/client" >/dev/null 2>&1
+wget -q --show-progress -O /etc/systemd/system/server.service "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/x-dns/server" >/dev/null 2>&1
 sed -i "s/xxxx/$domainns/g" /etc/systemd/system/client.service
 sed -i "s/xxxx/$domainns/g" /etc/systemd/system/server.service
 rm -rfv /etc/slowdns >/dev/null 2>&1
@@ -1075,8 +1075,8 @@ esac
 }
 
 function finishing() {
-wget -q -O quota https://panel.zenssh.com/api/files/quota/quota.sh && chmod +x quota && ./quota && rm -f /root/quota
-wget -q -O iplimit https://panel.zenssh.com/api/files/limitip/iplimit.sh && chmod +x iplimit && ./iplimit && rm -f /root/iplimit
+wget -q -O quota https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/quota/quota.sh && chmod +x quota && ./quota && rm -f /root/quota
+wget -q -O iplimit https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/limitip/iplimit.sh && chmod +x iplimit && ./iplimit && rm -f /root/iplimit
 echo "0 10,22 * * * root /sbin/reboot" >> /etc/cron.d/reboot
 echo "0 12,24 * * * root xp" >> /etc/cron.d/xp-all
 echo "0 0,12 * * * root xp" >> /etc/cron.d/xp-all
@@ -1118,7 +1118,7 @@ cd
 
 function install_noobz() {
 cd
-wget -q --no-check-certificate -O noobzvpns.zip "https://panel.zenssh.com/api/files/ssh/noobzvpns.zip" >/dev/null 2>&1
+wget -q --no-check-certificate -O noobzvpns.zip "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ssh/noobzvpns.zip" >/dev/null 2>&1
 unzip noobzvpns.zip >> /dev/null 2>&1
 chmod +x noobzvpns/*
 cd noobzvpns
@@ -1504,7 +1504,7 @@ stop_spinner $?
 # START INSTALL OHP OPENVPN
 start_spinner "${GB}[ INFO ]${NC} Installation Systems 7"
 sleep 1
-wget -q --no-check-certificate -O ohp "https://panel.zenssh.com/api/files/ohp/ohp.sh" && chmod +x ohp && sed -i -e 's/\r$//' ohp && bash ohp >/dev/null 2>&1
+wget -q --no-check-certificate -O ohp "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/ohp/ohp.sh" && chmod +x ohp && sed -i -e 's/\r$//' ohp && bash ohp >/dev/null 2>&1
 rm -rf /root/ohp >> /dev/null 2>&1
 stop_spinner $?
 # END INSTALL OHP OPENVPN
@@ -1512,7 +1512,7 @@ stop_spinner $?
 # START INSTALL UDP CUSTOM
 start_spinner "${GB}[ INFO ]${NC} Installation Systems 8"
 sleep 1
-wget -q --no-check-certificate -O udpinstall "https://panel.zenssh.com/api/files/udpcustom/udp-custom.sh" && chmod +x udpinstall && sed -i -e 's/\r$//' udpinstall && bash udpinstall 7100,7200,7300,7400,7500,7600,25000,2443,2052,9090,14022,8488,5355,53,5300,443,80,69,444,22,2222,143,1194,55,808,10000 >/dev/null 2>&1
+wget -q --no-check-certificate -O udpinstall "https://raw.githubusercontent.com/hidessh99/auto2025/refs/heads/main/udpcustom/udp-custom.sh" && chmod +x udpinstall && sed -i -e 's/\r$//' udpinstall && bash udpinstall 7100,7200,7300,7400,7500,7600,25000,2443,2052,9090,14022,8488,5355,53,5300,443,80,69,444,22,2222,143,1194,55,808,10000 >/dev/null 2>&1
 stop_spinner $?
 # END INSTALL UDP CUSTOM
 
